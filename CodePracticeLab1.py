@@ -16,7 +16,7 @@ print("Hello World!")
 # Add two numbers together and print the math equation
 print(str(myNum1) + " + " + str(myNum2) + " = " + str(myNum2+myNum1))
 
-# Print output message leveraging created variables firstName and lastName
+# Print output message leveraging variables firstName and lastName
 print("My name is " + firstName + " " + lastName + ".")
 
 # Print num1 and num2
