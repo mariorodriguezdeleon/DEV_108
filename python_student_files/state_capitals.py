@@ -1,17 +1,19 @@
+#===========================================================================
 # Code Practice lab 3 - Simple Quiz
 # DEV 108
 # US State Capitals Game
 # Mario Rodriguez
 # January 22, 2025
-from python.book_apps.ch04.guess_the_number import play_game
 
-# import random
 #===========================================================================
 # TO DO
 # Draft welcome message for the user with rules for the game
 # Generate five random numbers from 1-50 to pick five random US States
 # User response validation
+# Keep playing loop until player quits
+# Update print format of text
 #===========================================================================
+# import random
 
 # Dictionary of US States and US State Capitals
 usStateCapitals = { #fill out entire dictionary with all US states
@@ -67,13 +69,11 @@ usStateCapitals = { #fill out entire dictionary with all US states
     "Wyoming":"Cheyenne"
 }
 
+# holder lists for states and capitals -> to be updated by random generation once ramdom module is implemented
 usStates = ["Washington", "Oregon", "California", "Nevada", "Arizona"] # test list to be replaced with random generated states
 stateCapital = ["Olympia", "Salem", "Sacramento", "Carson City", "Phoenix"] #test list to be replaced with random generated states
 
-#===== Welcome Message =====
-# print("Welcome to the game")
-# print(usStateCapitals.get(usStates[0])) #use for test
-
+#===== Welcome Message ======
 def welcome_message():
     print(f'==========================================')
     print(f'         US State Capitals Game           ')
@@ -82,14 +82,14 @@ def welcome_message():
     play_game = (input(f'Please type "yes" or no to continue: '))
 
     return play_game
-
+#===== Outro Message ========
 def goodbye_message():
     print(f'See you next time. Goodbye! ')
-
+#===== Game Engine ==========
 def the_game():
 
     user_response = []  # collect user responses
-    user_score = 0
+    user_score = 0 # user score
 
     for i in range(len(usStates)):
         print(f"What is the capital of {usStates[i]}?\n")
@@ -98,9 +98,11 @@ def the_game():
               f"3. {stateCapital[2]}\n"
               f"4. {stateCapital[3]}\n"
               f"5. {stateCapital[4]}")
+
         print()
         user_response.insert(i, input("Enter your guess: "))
         print()
+
         if stateCapital[int(user_response[i])-1] == usStateCapitals.get(usStates[i]):
             user_score += 1
             print(f'That is correct!')
@@ -108,7 +110,8 @@ def the_game():
         else:
             print(f'Sorry, {stateCapital[int(user_response[i])]} is not the capital of {usStates[i]}')
             print()
-    # Print user score
+
+    # Print user score and message to the user
     if user_score == 5:
         print(f'Your Total Score: {user_score}. You are a Rockstar!')
         print()
@@ -124,16 +127,18 @@ def the_game():
 
     # for i in user_response:  # print out user responses as test
         # print(i)
+#===== Game Setup (TBD) =====
+# def game_setup()
+#===== Main =================
+# def main():
+#     start_game = welcome_message()
+#     if start_game == "yes":
+#         the_game()
+#     else:
+#         goodbye_message()
 
-def main():
-    start_game = welcome_message()
-    if start_game == "yes":
-        the_game()
-    else:
-        goodbye_message()
-
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
 
 
