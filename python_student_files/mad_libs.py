@@ -16,8 +16,8 @@ while True:
 
     name = input("\nFirst, what is your name? ")
     print(f"\nHello, {name}! Which story line would you like to play with?")
-    print("a. Going for a Hike")
-    print("b. Building a Campfire")
+    print("a. A Space Oddity")
+    print("b. Sockdor's Treasure")
 
     while True:
         choice = input("\nWhat is your choice (a/b)? ")
@@ -28,7 +28,7 @@ while True:
     if choice.lower() == "a":
         # Getting inputs for the first story
         noun1 = input("1) What is a thing you like to carry when you hike? ")
-        noun2 = input("2) Name a mountain peak: ")
+        noun2 = input("2) Name a mountain peak: ") # name your favorite
         verb1 = input("3) Give me a verb: ")
         adjective1 = input("4) Give me an adjective: ")
         noun3 = input("5) Give me a noun: ")
@@ -37,7 +37,10 @@ while True:
         # Displaying the first story
         print(f"\n{name}, here is your story:\n")
         print(
-            f"On a sunny day, you decided to {verb1}. You grabbed your {noun1} and went towards {noun2}. The journey was {adjective1}. On your way, you found a {noun3} which was {verb2}. It made your day adventurous!")
+            f"On a sunny day, you decided to {verb1}.\n"
+            f"You grabbed your {noun1} and went towards {noun2}.\n"
+            f"The journey was {adjective1}. On your way, you found a\n"
+            f"{noun3} which was {verb2}. It made your day adventurous!")
 
     else:
         # Getting inputs for the second story
@@ -51,7 +54,13 @@ while True:
         # Displaying the second story
         print(f"\n{name}, here is your story:\n")
         print(
-            f"You and {person} decide to build a {adjective} campfire. You wander around the forest looking for some dry wood to use to make a campfire to cook your {food}. Eventually, you collect {number} twigs. You hear a noise. You hide behind a tree. All of a sudden you see a large hairy {animal} walk by. {person} runs up to you and asks what is taking so long. You tell them that you would rather be {verb_ing}.")
+            f"You and {person} decide to build a {adjective} campfire.\n"
+            f"You wander around the forest looking for some dry wood to\n "
+            f"use to make a campfire to cook your {food}. Eventually,\n"
+            f"you collect {number} twigs. You hear a noise. You hide behind a tree.\n"
+            f"All of a sudden you see a large hairy {animal} walk by.\n"
+            f"{person} runs up to you and asks what is taking so long.\n"
+            f"You tell them that you would rather be {verb_ing}.")
 
     story_count += 1
     print(f"\nYou have created {story_count} story.")

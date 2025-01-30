@@ -82,9 +82,11 @@ def welcome_message():
     play_game = (input(f'Please type "yes" or no to continue: '))
 
     return play_game
+
 #===== Outro Message ========
 def goodbye_message():
     print(f'See you next time. Goodbye! ')
+
 #===== Game Engine ==========
 def the_game():
 
@@ -127,18 +129,20 @@ def the_game():
 
     # for i in user_response:  # print out user responses as test
         # print(i)
-#===== Game Setup (TBD) =====
-# def game_setup()
-#===== Main =================
-# def main():
-#     start_game = welcome_message()
-#     if start_game == "yes":
-#         the_game()
-#     else:
-#         goodbye_message()
 
-# if __name__ == "__main__":
-#     main()
+# ===== Game Setup (TBD) =====
+# def game_setup()
+
+# ===== Main =================
+def main():
+    start_game = welcome_message()
+    if start_game == "yes":
+        the_game()
+    else:
+        goodbye_message()
+
+if __name__ == "__main__":
+    main()
 
 
 
