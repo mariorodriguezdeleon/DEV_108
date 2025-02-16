@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+#===========================================================================
+# Code Practice Lab 6 - Test Scores
+# DEV 108 - 34634
+# Mario Rodriguez
+# February 14, 2025
+#===========================================================================
 
 # display a welcome message
 print("The Test Scores application")
@@ -13,10 +19,12 @@ score_total = 0
 test_score = 0
 
 while True:
+
     test_score = input("Enter test score (or 'x' to quit): ")
-    if test_score != "x":
+
+    if test_score.lower() != "x":
         test_score = int(test_score)
-        counter += 1
+        # counter += 1 # remove counter
     else:
         break
     if test_score >= 0 and test_score <= 100:
@@ -24,6 +32,9 @@ while True:
         counter += 1
     else:
         print("Test score must be from 0 through 100. Score discarded. Try again.")   
+
+if counter == 0:
+    counter += 1
 
 # calculate average score
 average_score = round(score_total / counter)
