@@ -17,6 +17,7 @@ while True:
 
     total_score = 0
     count = 0
+    test_scores = []
 
     # Inner loop to input scores for a single set
     while True:
@@ -34,6 +35,7 @@ while True:
         # Validate the input score
         if 0 <= score <= 100:
             # ---- Your code here ----------
+            test_scores.append(score)
             total_score += score
             count += 1
         else:
@@ -47,6 +49,7 @@ while True:
     print('===============================')
     print(f'Total Score: {total_score}')
     print(f'Average Score: {average_score}')
+    print(test_scores)
     print()
 
     # Ask the user if they want to enter another set of scores
@@ -57,3 +60,18 @@ while True:
         print("\nEnter test scores")
         print("Enter 'end' to end input")
         print("===============================")
+
+
+def get_scores():
+    print('get_scores')
+
+def process_scores():
+    print('process_scores')
+
+def main():
+    print('main()')
+    get_scores()
+    process_scores()
+
+if __name__ == '__main__':
+    main()
