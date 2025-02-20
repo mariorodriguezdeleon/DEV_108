@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 #===========================================================================
-# Code Practice Lab 4 - Test Scores Enhanced
+# Code Practice Lab 7 - Test Scores Enhanced
+# Leverage a Python List data structure, and functions
 # DEV 108 - 34634
 # Mario Rodriguez
-# January 27, 2025
+# February 19, 2025
 #===========================================================================
 
 # display a welcome message
@@ -17,6 +18,7 @@ while True:
 
     total_score = 0
     count = 0
+    
 
     # Inner loop to input scores for a single set
     while True:
@@ -34,6 +36,7 @@ while True:
         # Validate the input score
         if 0 <= score <= 100:
             # ---- Your code here ----------
+            test_scores.append(score)
             total_score += score
             count += 1
         else:
@@ -47,6 +50,7 @@ while True:
     print('===============================')
     print(f'Total Score: {total_score}')
     print(f'Average Score: {average_score}')
+    print(test_scores)
     print()
 
     # Ask the user if they want to enter another set of scores
@@ -57,3 +61,19 @@ while True:
         print("\nEnter test scores")
         print("Enter 'end' to end input")
         print("===============================")
+
+
+def get_scores(test_scores):
+    print('get_scores')
+
+def process_scores(test_scores):
+    print('process_scores')
+
+def main():
+    test_scores = []
+    print('main()')
+    get_scores(test_scores)
+    process_scores(test_scores)
+
+if __name__ == '__main__':
+    main()
