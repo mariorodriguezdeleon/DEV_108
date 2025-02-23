@@ -1,4 +1,10 @@
 # nameformat.py
+#===========================================================================
+# Code Practice Lab 4 - Test Scores Enhanced
+# DEV 108 - 34634
+# Mario Rodriguez
+# February 15, 2025
+#===========================================================================
 
 def sayHello(firstName):
     """
