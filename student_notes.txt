@@ -1,0 +1,7 @@
+1. Python is a interpreted high programming language.
+2. It supports multiple programming paridigms.
+3. Pyton has a simple syntax similar to English.
+4. It is widely used in web development, data science, and automation.
+5. The Python standard library provides many built-in useful modules.
+6. Python can be used for scripting and rapid application development.
+7. It has a vast community and extensive online documentation.
