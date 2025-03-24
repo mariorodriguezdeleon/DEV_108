@@ -23,11 +23,13 @@ import sys
 FILENAME = 'accounts_file.csv'
 
 # closes the program if and error occurs
+# fucntion status: working
 def exit_program():
     print("Terminating program.")
     sys.exit()
 
 # reads the file of accounts and returns a list to main
+# function status: working
 def read_accounts():
     try:
         accounts = []
@@ -44,7 +46,9 @@ def read_accounts():
         print(type(e), e)
         exit_program()
 
+# function status: Working
 def write_accounts(accounts_list):
+    # print(accounts_list)
     try:
         with open(FILENAME, "w", newline="") as file:
 ##            raise BlockingIOError("Error raised for testing.")
@@ -57,48 +61,81 @@ def write_accounts(accounts_list):
         print(type(e), e)
         exit_program()
 
-def list(accounts_lists):
+# function status: incomplete - still needs print formatting
+def list_accounts(accounts_lists):
     print('This is the list function')
+    for i, accounts_lists in enumerate(accounts_lists, start=1):
+        print(f"{i}. {accounts_lists[0]} ({accounts_lists[1]})")
+    print()
 
-def add(accounts_list):
+#function status: incomplete, working
+def add_account(accounts_list):
 
     print('This is the add function')
     first_name = input('Please enter first name: ')
     last_name = input('Please enter last name: ')
     user_age = input('Enter user age: ')
-    user_id = input('Enter random number: ') # to be replaced by a random generated id
-    emai_address = first_name+'.'+last_name+'@hmm.com'
-    user_passwrd = input('Enter temp password: ') # to be replaced by a random generated id
-    pod_number = input('Please enter a pod number for the user: ')
+    user_id = 1234 # to be replaced by a random generated id
+    emai_address = first_name + '.' + last_name + user_id+'@hmm.com'
+    user_passwrd = 'password123' # to be replaced by a random generated id
+    pod_number = 'A-100' #need to replace by random generated placement
 
     user = [first_name, last_name, user_age, user_id, emai_address, user_passwrd, pod_number]
+    print('appending to list...')
     accounts_list.append(user)
+    write_accounts(accounts_list)
 
+# fucntion status: not started
 def delete_account(accounts_list):
     print('Delete Account Function')
 
-def search_pod(accounts_list):
+# fucntion status: not started
+def search_by_pod(accounts_list):
     print('This is the search_pod function')
 
-def search_name(accounts_list):
+# fucntion status: not started
+def search_by_name(accounts_list):
     print('This is the search function')
 
+# fucntion status: not started
 def password_gen():
     print('This is the passowrd generation function')
 
+# fucntion status: not started
 def id_gen():
     print('This is the id generation funtion')
 
+# fucntion status: working.
+# function needs additional formatting
 def display_menu():
+
     print('This is the menu display function')
+    print("The Mars Mission Personel Program")
+    print()
+    print("COMMAND MENU")
+    print("list - List all accounts_listss")
+    print("add -  Add a accounts_lists")
+    print("del -  Delete a accounts_lists")
+    print("exit - Exit program")
+    print()   
 
 def main():
     
     display_menu()
     accounts_list = read_accounts()
-    while True:
-        command = input('Command: ')
-        if command = 'Add'
+    while True:        
+        command = input("Command: ")
+        if command.lower() == "list":
+            list_accounts(accounts_list)
+        elif command.lower() == "add":
+            add_account(accounts_list)
+        elif command.lower() == "del":
+            delete_account(accounts_list)
+        elif command.lower() == "exit":
+            break
+        else:
+            print("Not a valid command. Please try again.\n")
+    print("Bye!")
 
     
 if __name__ == "__main__":
