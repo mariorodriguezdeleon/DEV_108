@@ -9,12 +9,13 @@
 # February 22, 2025
 #
 # TODO: 
-#   - Create a function to 'add' new users
-#   - Create a function to 'list' all users
-#   - Create a function to 'search' for users
-#   - Create a function to 'search living pod'
-#   - Create a function to 'delete' users
-#   - Create a function to 'add' new users
+#   [X] Create a function to 'add' new users
+#   [X] Create a function to 'list' all users
+#   [X] Create a function to 'search' for user by last name
+#   [] Create a function to 'search living pod'
+#   [X] Create a function to 'delete' users
+#   [] Create a function to generate random password
+#   [] Create a function for administrator
 #===========================================================================
 
 import csv
@@ -22,14 +23,14 @@ import sys
 
 FILENAME = 'accounts_file.csv'
 
-# closes the program if and error occurs
-# fucntion status: working
+# closes the program when called by another function if and error occurs within the calling function
+# fucntion status: Working
 def exit_program():
     print("Terminating program.")
     sys.exit()
 
-# reads the file of accounts and returns a list to main
-# function status: working
+# reads the file of accounts and returns a list to main for processing
+# function status: Working
 def read_accounts():
     try:
         accounts = []
@@ -46,9 +47,9 @@ def read_accounts():
         print(type(e), e)
         exit_program()
 
+# writer function to record user account data to persistent storage. generates a csv file
 # function status: Working
 def write_accounts(accounts_list):
-    # print(accounts_list)
     try:
         with open(FILENAME, "w", newline="") as file:
 ##            raise BlockingIOError("Error raised for testing.")
@@ -61,14 +62,72 @@ def write_accounts(accounts_list):
         print(type(e), e)
         exit_program()
 
-# function status: incomplete - still needs print formatting
-def list_accounts(accounts_lists):
-    print('This is the list function')
-    for i, accounts_lists in enumerate(accounts_lists, start=1):
-        print(f"{i}. {accounts_lists[0]} ({accounts_lists[1]})")
-    print()
+# lists user account information: First Name, Last Name, Age, Email, Living POD #
+# function status: Working
+def list_accounts(accounts_list):
+    
+    headers = ['Record #', 'First Name', 'Last Name', 'Age', 'Email', 'POD #']
 
-#function status: incomplete, working
+    print('==========================================================================================================================')
+    for col in headers:
+        if col == 'POD #':
+            print(col.rjust(20), end="")
+        else:
+            print(col.ljust(20), end="")
+    print('\n==========================================================================================================================')
+
+    for row_index, row in enumerate(accounts_list, start=1):
+        print(str(row_index).ljust(20), end="")
+        for col_index, value in enumerate(row, start=1 ):
+            if col_index == 4 or col_index == 6:
+                continue
+            if col_index == 5:
+                print(str(value).ljust(30), end="")
+                continue
+            if col_index == 7:
+                print(str(value).rjust(10), end="")
+            else:
+                print(str(value).ljust(20), end="")
+        print()
+    print('==========================================================================================================================')
+
+# displays an administrator view of all account information for all human users. Password protected
+# function status: Working
+def admin_report(accounts_list):
+
+    counter = 5
+    AdminPassword = "DEV108ISTHEBEST"
+
+    while True:
+        # counter -= 1
+        admin_password = input('Please Enter Admin Password: ')
+
+        if admin_password == AdminPassword:
+
+            headers = ['ID #', 'First Name', 'Last Name', 'Email', 'Password']
+            print('==========================================================================================================================')
+            for col in headers:
+                if col == 'Password':
+                    print(col.rjust(30), end="")
+                else:
+                    print(col.ljust(20), end="")
+            print('\n==========================================================================================================================')
+
+            for row_index, row in enumerate(accounts_list, start=1):
+                # print(str(row_index).ljust(20), end="")
+                # for col_index, value in enumerate(row, start=1 ):
+                print(row[3].ljust(18), row[0].ljust(20), row[1].ljust(20), row[4].ljust(40), row[5].ljust(20))
+            print('==========================================================================================================================')
+            break
+        else:
+            print('Password is Incorrect')
+            break
+            
+
+# add a new user record to the accounts list
+# function status: incomplete
+# [] Password generator not set
+# [] System generated POD not set
 def add_account(accounts_list):
 
     print('This is the add function')
@@ -76,7 +135,7 @@ def add_account(accounts_list):
     last_name = input('Please enter last name: ')
     user_age = input('Enter user age: ')
     user_id = 1234 # to be replaced by a random generated id
-    emai_address = first_name + '.' + last_name + user_id+'@hmm.com'
+    emai_address = first_name.lower().strip() + '.' + last_name.lower().strip() + str(user_id) + '@hmm.com'
     user_passwrd = 'password123' # to be replaced by a random generated id
     pod_number = 'A-100' #need to replace by random generated placement
 
@@ -87,15 +146,42 @@ def add_account(accounts_list):
 
 # fucntion status: not started
 def delete_account(accounts_list):
+
     print('Delete Account Function')
 
-# fucntion status: not started
-def search_by_pod(accounts_list):
-    print('This is the search_pod function')
+    while True:
+        try:
+            number = int(input("Enter the Record Number: "))
+        except ValueError:
+            print("Invalid integer. Please try again.")
+            continue
+        if number < 1 or number > len(accounts_list):
+            print("There is no movie with that number. Please try again.")
+        else:
+            break
+    account = accounts_list.pop(number - 1)
+    write_accounts(accounts_list)
+    print(f"{account[0]} was deleted.\n")
 
 # fucntion status: not started
-def search_by_name(accounts_list):
-    print('This is the search function')
+def search_by_pod_number(accounts_list):
+    print('This is the search_pod function')
+
+# serach by last name function which lists records that match the search criteria. Lists 'Last name', 'First Name', 'POD #'
+# fucntion status: working
+def search_by_las_name(accounts_list):
+    print('\nSearch function by Last Name')
+
+    last_name = input("Enter Last Name: ")
+    print('===========================================')
+    for i, account in enumerate(accounts_list, start=1):
+        # print(account)
+        if account[1] == last_name:
+            print(account[1].ljust(10), account[0].ljust(10), 'POD #:'.center(10), account[6].ljust(10))
+        else:
+            print('No record found')
+    print('===========================================')
+    print()
 
 # fucntion status: not started
 def password_gen():
@@ -109,13 +195,16 @@ def id_gen():
 # function needs additional formatting
 def display_menu():
 
-    print('This is the menu display function')
-    print("The Mars Mission Personel Program")
     print()
-    print("COMMAND MENU")
-    print("list - List all accounts_listss")
-    print("add -  Add a accounts_lists")
-    print("del -  Delete a accounts_lists")
+    print("The Mars Mission Personnel Program")
+    print()
+    print("        COMMAND MENU")
+    print("list - List All Available Records")
+    print("add - Add Account")
+    print("del - Delete Record")
+    print("find - Search Record by Last Name")
+    print("pod - Search by POD #")
+    print("admin - Prints User Account Information")
     print("exit - Exit program")
     print()   
 
@@ -131,12 +220,17 @@ def main():
             add_account(accounts_list)
         elif command.lower() == "del":
             delete_account(accounts_list)
+        elif command.lower() == "find":
+            search_by_las_name(accounts_list)
+        elif command.lower() == "pod":
+            search_by_pod_number(accounts_list)
+        elif command.lower() == "admin":
+            admin_report(accounts_list)
         elif command.lower() == "exit":
             break
         else:
             print("Not a valid command. Please try again.\n")
     print("Bye!")
 
-    
 if __name__ == "__main__":
     main()
