@@ -84,4 +84,22 @@ def main():
 
 
 
-main()
+# main()
+
+# car = "PORSCHE"
+# color = "red"
+# my_car = car.join(color)
+# print(my_car)
+
+# book_name = "a tale for the knight"
+# book = book_name.title()
+# print(book)
+
+# name = "Mervin the Magician"
+# words = name.split()
+# print(words[0] + ", you are quite a " + words[2].lower())
+
+# firstName = "Mickey"
+# lastName = "Mouse"
+# myName = firstName + lastName
+# print(myName.lower())
