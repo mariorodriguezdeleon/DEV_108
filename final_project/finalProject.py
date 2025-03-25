@@ -23,7 +23,7 @@
 #   [X] Create a function to 'delete' user accounts
 #   [X] Create a function to generate random password
 #   [X] Create a function to generate user id's
-#   [] Create a function to generate living pod room for user
+#   [X] Create a function to generate living pod room for user
 #===========================================================================
 
 import csv
@@ -33,18 +33,23 @@ import random
 
 FILENAME = 'accounts_file.csv'
 
+# Dictionary data structure to hold the POD slots. During the read_accounts() run, the values
+# are added to each POD which reflects the humans assigned to each slot within the POD
+PODS = {'A-100': 0, 'A-101': 0, 'A-102': 0, 'A-103': 0, 'A-104': 0, 'A-105': 0, 'OVERFLOW':0}
+
 # sample users to test the program
 sample_users = [
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
+    ['Neil','Armstrong',35,4986,'neil.armstrong1234@hmm.com','UzD3]8x=','A-101'],
+    ['Buzz','Aldrin',44,3241,'buzz.aldrin1234@hmm.com','G_5#Pza3','A-102'],
+    ['Peggy','Whitson',37,4677,'peggy.whitson4677@hmm.com','?Pys|G51','A-103'],
+    ['Alan','Smith',33,5640,'alan.smith5640@hmm.com','5qOWa0:|','A-100'],
+    ['Mario','Rodriguez',35,1836,'mario.rodriguez1836@hmm.com','38n:uA<R','A-100'],
+    ['Sally','Ride',39,6946,'sally.ride6946@hmm.com','"g3,|j9OE"','A-100'],
+    ['Audrey','Rodriguez',29,9477,'audrey.rodriguez9477@hmm.com','2Clp0X(&','A-100'],
+    ['Benjamin','Rodriguez',27,9502,'benjamin.rodriguez9502@hmm.com','iI!`8Qm4','A-100'],
+    ['Tilly','Rodriguez',34,9418,'tilly.rodriguez9418@hmm.com','[q5PW4t&','A-100'],
+    ['Gus','Rodriguez',34,3665,'gus.rodriguez3665@hmm.com','ht<.M4O3','A-104'],
+    ['John','Glenn',54,2507,'john.glenn2507@hmm.com','=H7Mb3o{','A-105']
 ]
 
 # closes the program when called by another function if and error occurs within the calling function
@@ -59,12 +64,18 @@ def exit_program():
 # function status: Working
 def read_accounts():
 
+    global PODS
+
     try:
         accounts = []
         with open(FILENAME, newline="") as file:
             reader = csv.reader(file)
             for row in reader:
                 accounts.append(row)
+
+        # loop to setup the habitat pod assignment record
+        for row, account in enumerate(accounts, start=1):
+            PODS[account[6]] += 1
         return accounts
     except FileNotFoundError as e:
         print(f"Could not find {FILENAME} file.")
@@ -158,7 +169,7 @@ def add_account(accounts_list):
     first_name = input('Please enter first name: ')
     last_name = input('Please enter last name: ')
 
-    # test for 
+    # test for appropriate age input
     while True:
         try:
             user_age = int(input('Enter user age: '))
@@ -170,10 +181,10 @@ def add_account(accounts_list):
         else:
             break
 
-    user_id = id_gen(accounts_list) # to be replaced by a random generated id
+    user_id = id_gen(accounts_list) # random system generated password
     emai_address = first_name.lower().strip() + '.' + last_name.lower().strip() + str(user_id) + '@hmm.com'
     user_passwrd = password_gen() # random system generated password
-    pod_number = 'A-100' #need to replace by system generated placement
+    pod_number = pod_assignment()  # 'A-100'need to replace by system generated placement
 
     user = [first_name, last_name, user_age, user_id, emai_address, user_passwrd, pod_number]
     print('appending to list...')
@@ -181,7 +192,7 @@ def add_account(accounts_list):
     write_accounts(accounts_list)
 
 # deletes user account by record id
-# fucntion status: Working
+# function status: Working
 def delete_account(accounts_list):
 
     print('Delete Account Function')
@@ -201,7 +212,7 @@ def delete_account(accounts_list):
 
 # searches the accounts list for individuals assigned to the specified pod. Returns the names and user id.
 # This function provides the total assigned slots and available slot counts
-# fucntion status: Working
+# function status: Working
 def search_by_pod_number(accounts_list):
     print('This is the search_pod function')
 
@@ -227,7 +238,7 @@ def search_by_pod_number(accounts_list):
 
 # serach by last name function which lists records that match the search criteria. Lists 'Last name', 'First Name', 'POD #' of 
 # all matching records in the data file
-# fucntion status: working
+# function status: working
 def search_by_last_name(accounts_list):
     print('\nSearch function by Last Name')
 
@@ -247,7 +258,7 @@ def search_by_last_name(accounts_list):
 
 # generates a randome password that is 8 characters long and includes special characters, upper and lower case letters, and nubers
 # function is called by add_account()
-# fucntion status: Working
+# function status: Working
 def password_gen():
     print('This is the passowrd generation function')
 
@@ -286,7 +297,7 @@ def password_gen():
 
 # generates a random integer between 1000-9999 for the user_id. Validates that no duplicates are generated
 # function is called by add_account()
-# fucntion status: Working
+# function status: Working
 def id_gen(accounts_list):
 
     user_id = 0
@@ -303,11 +314,22 @@ def id_gen(accounts_list):
 
     return user_id
 
+# system generated pod assignment function.
+# function status: Working
+# no logic to suppress population to 30. Function will continue to find the lowest populated POD and assign when requested
 def pod_assignment():
-    print
+
+    print('This is the pod function')
+
+    global PODS
+
+    available_slot = min(PODS, key=PODS.get)
+    PODS[available_slot] += 1 
+    print(PODS[available_slot])
+    return available_slot
 
 # dysplays the program menu of commands for the user
-# fucntion status: Working.
+# function status: Working.
 def display_menu():
 
     print()
