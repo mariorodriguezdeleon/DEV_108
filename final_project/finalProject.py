@@ -30,6 +30,17 @@ import csv
 import sys
 import string
 import random
+import logging
+
+# configure logging to write to a file and to the console
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("app.log"),
+        logging.StreamHandler()
+    ]
+)
 
 FILENAME = 'accounts_file.csv'
 
@@ -56,7 +67,7 @@ sample_users = [
 # function status: Working
 def exit_program():
 
-    print("Terminating program.")
+    logging.critical("Terminating program.")
     sys.exit()
 
 # reads the csv file of accounts and returns a list to main() for processing.
@@ -78,12 +89,11 @@ def read_accounts():
             PODS[account[6]] += 1
         return accounts
     except FileNotFoundError as e:
-        print(f"Could not find {FILENAME} file.")
-        print('Please ensure that the file exists and the file path is correct.')
+        logging.error("Could not find %s file. Please ensure that the file exists and the file path is correct.", FILENAME)
         exit_program()
         return accounts
     except Exception as e:
-        print(type(e), e)
+        logging.error("Unexpected error reading accounts: %s - %s", type(e).__name__, e)
         exit_program()
 
 # writer function to record user account data to persistent storage. generates a csv file
@@ -97,10 +107,10 @@ def write_accounts(accounts_list):
             writer = csv.writer(file)
             writer.writerows(accounts_list)
     except OSError as e:
-        print(type(e), e)
+        logging.error("OS error writing accounts: %s - %s", type(e).__name__, e)
         exit_program()
     except Exception as e:
-        print(type(e), e)
+        logging.error("Unexpected error writing accounts: %s - %s", type(e).__name__, e)
         exit_program()
 
 # lists human inhabitants' information: First Name, Last Name, Age, Email, Living POD #
@@ -155,8 +165,10 @@ def admin_report(accounts_list):
                 print(str(row[3]).ljust(18), row[0].ljust(20), row[1].ljust(20), row[4].ljust(40), row[5].ljust(20))
             print('==========================================================================================================================')
             break
+        logging.warning("Failed admin login attempt (%d of %d)", i + 1, max_tries)
         print("Please Try Again")
     else:
+        logging.warning("Admin login failed - too many attempts (%d)", max_tries)
         print('Password is Incorrect. Too many attempts')
         print()
          
@@ -187,9 +199,9 @@ def add_account(accounts_list):
     pod_number = pod_assignment()  # 'A-100'need to replace by system generated placement
 
     user = [first_name, last_name, user_age, user_id, emai_address, user_passwrd, pod_number]
-    print('appending to list...')
     accounts_list.append(user)
     write_accounts(accounts_list)
+    logging.info("Account added for %s %s (ID: %s, POD: %s)", first_name, last_name, user_id, pod_number)
 
 # deletes user account by record id
 # function status: Working
@@ -208,6 +220,7 @@ def delete_account(accounts_list):
             break
     account = accounts_list.pop(number - 1)
     write_accounts(accounts_list)
+    logging.info("Account deleted for %s %s (ID: %s)", account[0], account[1], account[3])
     print(f"Account for {account[0]} was deleted.\n")
 
 # searches the accounts list for individuals assigned to the specified pod. Returns the names and user id.
@@ -347,8 +360,10 @@ def display_menu():
 
 def main():
     
+    logging.info("Program started")
     display_menu()
     accounts_list = read_accounts()
+    logging.info("Loaded %d account(s) from %s", len(accounts_list), FILENAME)
     while True:
         print('Enter "m" to view commands')        
         command = input("Command: ")
@@ -369,6 +384,7 @@ def main():
         elif command.lower() == "exit":
             break
         else:
+            logging.warning("Invalid command entered: %s", command)
             print("Not a valid command. Please try again.\n")
     print("Bye!")
 
