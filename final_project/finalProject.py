@@ -7,7 +7,7 @@
 # Final Project - Human Mission to Mars Account Management System
 #
 # This program is used to create user accounts for a fictitional organization - 
-# SNASA - Secrete National Aeronautics and Sapce Administration. 
+# SNASA - Secret National Aeronautics and Space Administration.
 # This program showcases my ability to use what I've learned during my time in
 # DEV 108. 
 # 
