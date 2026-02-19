@@ -189,7 +189,7 @@ def add_account(accounts_list):
             print("Invalid integer. Please try again.")
             continue
         if user_age < 0:
-            print("User's age must be grater than 0.")
+            print("User's age must be greater than 0.")
         else:
             break
 
@@ -215,7 +215,7 @@ def delete_account(accounts_list):
             print("Invalid integer. Please try again.")
             continue
         if number < 1 or number > len(accounts_list):
-            print("There is no movie with that number. Please try again.")
+            print("There is no record with that number. Please try again.")
         else:
             break
     account = accounts_list.pop(number - 1)
@@ -249,7 +249,7 @@ def search_by_pod_number(accounts_list):
     print('===========================================')
     print()
 
-# serach by last name function which lists records that match the search criteria. Lists 'Last name', 'First Name', 'POD #' of 
+# search by last name function which lists records that match the search criteria. Lists 'Last name', 'First Name', 'POD #' of
 # all matching records in the data file
 # function status: working
 def search_by_last_name(accounts_list):
